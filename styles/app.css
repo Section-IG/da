@@ -1,0 +1,314 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-width: 720px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 100%;
+}
+
+input, textarea {
+    font-family: "Open Sans", sans-serif;
+    font-size: 100%;
+}
+
+/* Welcome Overlay */
+
+.welcome-overlay {
+    z-index: 1;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(40, 40, 40, 0.94);
+}
+
+.welcome-overlay .welcome-overlay-content {
+    text-align: center;
+}
+
+.welcome-overlay .welcome-title {
+    margin: 1rem 0;
+    color: white;
+    font-size: 1.6rem;
+}
+
+.welcome-overlay .welcome-subtitle {
+    margin: 1rem 0;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.25rem;
+}
+
+.welcome-overlay .button {
+    display: inline-block;
+    padding: 1rem;
+    margin: 1rem;
+    background-color: #27ae60;
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    color: white;
+    transition-property: background-color, color;
+    transition-duration: 200ms;
+}
+
+.welcome-overlay .welcome-sub-button {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+}
+
+.welcome-overlay .welcome-sub-button a {
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.welcome-overlay .welcome-sub-button a:active,
+.welcome-overlay .welcome-sub-button a:hover {
+    border-bottom-width: 0;
+}
+
+.welcome-overlay .welcome-copyright {
+    display: block;
+    margin-top: 2.5rem;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.75rem;
+    line-height: 0.9rem;
+}
+
+.welcome-overlay .welcome-copyright a {
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.4);
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.welcome-overlay .welcome-copyright a:active,
+.welcome-overlay .welcome-copyright a:hover {
+    border-bottom-width: 0;
+}
+
+/* Topbar */
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    padding: 0 1rem;
+    background-color: #222;
+    border-bottom: 1px solid #111;
+    color: #ededed;
+}
+
+.topbar .topbar-title {
+    font-weight: 400;
+}
+
+.topbar .topbar-menu {
+    display: flex;
+    align-items: center;
+    margin-right: -0.75rem;
+}
+
+.topbar .topbar-menu .menu-item {
+    margin: 0 0.75rem;
+    color: inherit;
+    font-size: 0.825rem;
+    text-decoration: none;
+}
+
+.topbar .topbar-menu .menu-item:active,
+.topbar .topbar-menu .menu-item:hover {
+    color: #fff;
+}
+
+.topbar .menu-item.menu-item--input,
+.topbar .menu-item.menu-item--input-button {
+    display: flex;
+    align-items: center;
+    height: 28px;
+    padding: 0 0.5rem;
+    border: 1px solid #555;
+}
+
+.topbar .menu-item.menu-item--input {
+    width: 220px;
+    margin-right: 0;
+    border-radius: 3px 0 0 3px;
+    background-color: #333;
+    color: #fff;
+}
+
+.topbar .topbar-menu .menu-item.menu-item--input-button {
+    margin-left: 0;
+    border-radius: 0 3px 3px 0;
+    background-color: #555;
+}
+
+/* Editor */
+
+.editor {
+    border-bottom: 1px solid #ddd;
+}
+
+.editor:last-child {
+    border-bottom-width: 0;
+}
+
+.editor.editor--dark {
+    background-color: #333;
+    border-bottom-color: #222;
+    color: #fff;
+}
+
+.editor .editor-header {
+    display: flex;
+    align-items: center;
+    height: 56px;
+    padding: 0 1rem;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.8rem;
+}
+
+.editor.editor--dark .editor-header {
+    border-bottom-color: #222;
+}
+
+.editor .editor-header .header-title {
+    margin-right: 1rem;
+    text-transform: uppercase;
+}
+
+.editor .editor-header .header-option-items {
+    display: flex;
+    width: 100%;
+}
+
+.editor .editor-header .header-option-items .option-item {
+    margin: 0 0.25rem;
+    padding: 0.35rem;
+    background-color: #ddd;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    color: #444;
+}
+
+.editor.editor--dark .editor-header .header-option-items .option-item {
+    background-color: #222;
+    border-color: #222;
+    color: #cecece;
+}
+
+.editor .editor-header .header-option-items .option-item:active,
+.editor .editor-header .header-option-items .option-item:hover {
+    cursor: pointer;
+    background-color: #fff;
+    color: #000;
+}
+
+.editor.editor--dark .editor-header .header-option-items .option-item:active,
+.editor.editor--dark .editor-header .header-option-items .option-item:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+.editor .editor-header .header-option-items .option-item.option-item--disabled,
+.editor .editor-header .header-option-items .option-item.option-item--disabled:active,
+.editor .editor-header .header-option-items .option-item.option-item--disabled:hover {
+    cursor: default;
+    background-color: #ededed;
+    border-color: #ededed;
+    color: #888;
+}
+
+.editor.editor--dark .editor-header .header-option-items .option-item.option-item--disabled,
+.editor.editor--dark .editor-header .header-option-items .option-item.option-item--disabled:active,
+.editor.editor--dark .editor-header .header-option-items .option-item.option-item--disabled:hover {
+    background-color: #444;
+    border-color: #444;
+    color: #888;
+}
+
+.editor .editor-header .header-option-items .option-item.option-item--active,
+.editor.editor--dark .editor-header .header-option-items .option-item.option-item--active {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+    color: #fff;
+}
+
+.editor .editor-header .header-option-items .option-item.option-item--active:active,
+.editor.editor--dark .editor-header .header-option-items .option-item.option-item--active:active,
+.editor .editor-header .header-option-items .option-item.option-item--active:hover,
+.editor.editor--dark .editor-header .header-option-items .option-item.option-item--active:hover {
+    background-color: #81C784;
+    color: #fff;
+}
+
+.editor .editor-header .header-option-items .option-item.option-item--align-end {
+    margin-left: auto;
+}
+
+.editor .editor-content.editor-content--input {
+    height: calc(100vh - 168px);
+}
+
+.editor .editor-content .source-input,
+.editor .editor-content .source-output {
+    display: block;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    margin: 0;
+    padding: 1rem;
+    overflow: auto;
+    overflow-wrap: normal;
+    white-space: pre;
+    font-family: "Monaco", "Consolas", "Courier New", "Lucida Console", monospace, serif;
+    color: inherit;
+}
+
+.editor .editor-content .source-input {
+    background-color: transparent;
+    border: none;
+    font-size: 0.8rem;
+    line-height: 1.35rem;
+}
+
+.editor .editor-content .source-output {
+    font-size: 10pt;
+    line-height: 11pt;
+}
+
+@media (min-width: 80rem) {
+    .editor-container::after {
+        display: block;
+        content: "";
+        clear: both;
+    }
+
+    .editor.editor--split {
+        float: left;
+        width: 50%;
+        border-bottom-width: 0;
+        border-right: 1px solid #ddd;
+    }
+
+    .editor.editor--split:last-child {
+        border-right-width: 0;
+    }
+
+    .editor.editor--dark.editor--split {
+        border-right-color: #222;
+    }
+    
+    .editor .editor-content.editor-content--input,
+    .editor .editor-content.editor-content--output {
+        height: calc(100vh - 112px);
+    }
+}

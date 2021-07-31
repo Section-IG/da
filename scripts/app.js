@@ -68,6 +68,18 @@ window.addEventListener("load", function() {
     drawDiagram();
 });
 
+// Load Service Worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
+
+
 window.addEventListener("beforeunload", function() {
     saveContentToCache();
 });

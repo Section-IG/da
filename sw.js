@@ -1,15 +1,17 @@
 var CACHE_NAME = 'IESN_IG_DA';
 var urlsToCache = [
-    '/',
-    '/styles/app.css',
-    '/styles/pcp-highlight.css',
-    '/styles/print.css',
-    '/styles/reset.css',
-    '/styles/toastr.min.css',
-    '/scripts/app.js',
-    '/scripts/PseudoCodeParser.js',
-    '/scripts/libraries/jquery-3.2.1.min.js',
-    '/scripts/libraries/toastr.min.js',
+    '.',
+    'styles/app.css',
+    'styles/pcp-highlight.css',
+    'styles/print.css',
+    'styles/reset.css',
+    'styles/toastr.min.css',
+    'scripts/app.js',
+    'scripts/PseudoCodeParser.js',
+    'scripts/libraries/jquery-3.2.1.min.js',
+    'scripts/libraries/toastr.min.js',
+    'https://use.fontawesome.com/ca53c7c19d.css',
+    'https://use.fontawesome.com/ca53c7c19d.js'
 ];
 
 self.addEventListener('install', function (event) {
@@ -33,7 +35,6 @@ self.addEventListener('fetch', function (event) {
         .then(function (response) {
             // Cache hit - return response
             if (response) {
-                console.log(event.request)
                 return response;
             }
 

@@ -167,7 +167,7 @@ buttonInsertSwitch.addEventListener("click", function(event) {
 
 buttonInsertLoop.addEventListener("click", function(event) {
     event.preventDefault();
-    insert(input, "do while ()\n\nenddo");
+    insert(input, "while ()\n\nendwhile");
     drawDiagram();
 });
 

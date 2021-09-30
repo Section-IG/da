@@ -10,7 +10,9 @@ var PseudoCodeParser = function(ownValues) {
         { pattern: /\bendif\b/i,    replacement: "└──",         border: false },
         { pattern: /\b___\b/i,      replacement: "└──",         border: false },
         { pattern: /\bdo\b/i,       replacement: "╔══ do",      border: "║" },
+        { pattern: /\bwhile\b/i,    replacement: "╔══ while",   border: "║" },
         { pattern: /\benddo\b/i,    replacement: "╙──",         border: false },
+        { pattern: /\bendwhile\b/i, replacement: "╙──",         border: false },
         { pattern: /===/i,          replacement: "╙──",         border: false }
     ];
 

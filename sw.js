@@ -1,17 +1,17 @@
 var CACHE_NAME = 'IESN_IG_DA';
 var urlsToCache = [
-    '.',
-    'styles/app.css',
-    'styles/pcp-highlight.css',
-    'styles/print.css',
-    'styles/reset.css',
-    'styles/toastr.min.css',
-    'scripts/app.js',
-    'scripts/PseudoCodeParser.js',
-    'scripts/libraries/jquery-3.2.1.min.js',
-    'scripts/libraries/toastr.min.js',
-    'https://use.fontawesome.com/ca53c7c19d.css',
-    'https://use.fontawesome.com/ca53c7c19d.js'
+    "/da/",
+    "/da/styles/app.css",
+    "/da/styles/pcp-highlight.css",
+    "/da/styles/print.css",
+    "/da/styles/reset.css",
+    "/da/styles/toastr.min.css",
+    "/da/scripts/app.js",
+    "/da/scripts/PseudoCodeParser.js",
+    "/da/scripts/libraries/jquery-3.2.1.min.js",
+    "/da/scripts/libraries/toastr.min.js",
+    "https://use.fontawesome.com/ca53c7c19d.css",
+    "https://use.fontawesome.com/ca53c7c19d.js",
 ];
 
 self.addEventListener('install', function (event) {
@@ -41,17 +41,15 @@ self.addEventListener('fetch', function (event) {
             return fetch(event.request).then(
                 function (response) {
                     // Check if we received a valid response
-                    if (!response || response.status !== 200 || response.type !== 'basic' || !response.url.startsWith('http')) {
-                        return response;
+                    if (response && response.status === 200 && response.type === 'basic' && response.url.startsWith('http')) {
+                        var responseToCache = response.clone();
+
+                        caches.open(CACHE_NAME)
+                            .then(function (cache) {
+                                cache.put(event.request, responseToCache);
+                            });
                     }
-
-                    var responseToCache = response.clone();
-
-                    caches.open(CACHE_NAME)
-                        .then(function (cache) {
-                            cache.put(event.request, responseToCache);
-                        });
-
+                    
                     return response;
                 }
             );

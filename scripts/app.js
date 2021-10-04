@@ -71,7 +71,7 @@ window.addEventListener("load", function() {
 // Load Service Worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/da/sw.js', { scope: '/da/' }).catch(function(err) {
+    navigator.serviceWorker.register('/da/serviceWorkerOffline.js', { scope: '/da/' }).catch(function(err) {
       // registration failed :(
       console.log('ServiceWorker registration failed: ', err);
     });

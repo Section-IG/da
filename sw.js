@@ -10,8 +10,6 @@ const urlsToCache = [
     '/da/scripts/PseudoCodeParser.js',
     '/da/scripts/libraries/jquery-3.2.1.min.js',
     '/da/scripts/libraries/toastr.min.js',
-    'https://use.fontawesome.com/ca53c7c19d.css',
-    'https://use.fontawesome.com/ca53c7c19d.js',
 ];
 
 async function addAllToCache() {

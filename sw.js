@@ -14,14 +14,18 @@ const urlsToCache = [
     'https://use.fontawesome.com/ca53c7c19d.js',
 ];
 
+async function addAllToCache() {
+    try {
+        const cache = await caches.open(CACHE_NAME);
+        return cache.addAll(urlsToCache)
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 self.addEventListener('install', function(event) {
     // Perform install steps
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-        .then(function(cache) {
-            return cache.addAll(urlsToCache);
-        })
-    );
+    event.waitUntil(addAllToCache());
 });
 
 self.addEventListener('activate', function(event) {

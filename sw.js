@@ -1,5 +1,5 @@
-var CACHE_NAME = 'IESN_IG_DA';
-var urlsToCache = [
+const CACHE_NAME = 'IESN_IG_DA';
+const urlsToCache = [
     '/da/',
     '/da/styles/app.css',
     '/da/styles/pcp-highlight.css',
@@ -25,7 +25,7 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('activate', function(event) {
-    console.log('Service worker is activated!');
+    console.debug('Service worker is activated!');
 });
 
 

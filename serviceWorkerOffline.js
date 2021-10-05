@@ -42,14 +42,14 @@ async function cacheNetworkRace(event) {
         const response = await Promise.any([cacheFetch(cache, event.request), networkFetch(cache, event.request)]);
         return response;
     } catch (error) {
-        console.error("Not found in cache or network");
+        console.error("Not found in cache or network", error);
     }
 }
 
 async function cacheFetch(cache, request) {
     const response = await cache.match(request);
     if (response) return response;
-    return Promise.reject('Request not cached');
+    throw new Error('Request not cached');
 }
 
 async function networkFetch(cache, request) {
@@ -60,6 +60,6 @@ async function networkFetch(cache, request) {
         }    
         return response;
     } catch (error) {
-        return Promise.reject('Failed to fetch')
+        throw error
     }
 }

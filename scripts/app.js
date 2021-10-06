@@ -78,7 +78,6 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-
 window.addEventListener("beforeunload", function() {
     saveContentToCache();
 });

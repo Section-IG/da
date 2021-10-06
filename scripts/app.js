@@ -70,12 +70,12 @@ window.addEventListener("load", function() {
 
 // Load Service Worker
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/da/serviceWorkerOffline.js', { scope: '/da/' }).catch(function(err) {
-      // registration failed :(
-      console.error('ServiceWorker registration failed: ', err);
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/da/serviceWorkerOffline.js', { scope: '/da/' }).catch(function(err) {
+        // registration failed :(
+        console.error('ServiceWorker registration failed: ', err);
+        });
     });
-  });
 }
 
 window.addEventListener("beforeunload", function() {

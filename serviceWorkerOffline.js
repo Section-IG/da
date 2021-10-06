@@ -1,4 +1,6 @@
 const CACHE_NAME = 'IESN_IG_DA';
+// TODO: find a way to automatically retrieve files to cache
+// at the moment, it is acceptable to let this list hardcoded, see comments on https://github.com/IESN-IG/da/pull/1
 const urlsToCache = [
     '/da/',
     '/da/styles/app.css',

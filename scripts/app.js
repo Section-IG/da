@@ -114,7 +114,7 @@ input.addEventListener("keyup", function() {
     }
 });
 
-input.addEventListener("keypress", function (event) {
+input.addEventListener("keydown", function (event) {
     // Tabulation
     if (event.keyCode === 9) {
         event.preventDefault();

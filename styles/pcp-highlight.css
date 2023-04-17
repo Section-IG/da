@@ -2,7 +2,9 @@
     color: #27ae60;
     font-weight: bold;
 }
-.pcp-highlight .quote {
+.pcp-highlight .quote,
+.pcp-highlight .quote .reserved-word,
+.pcp-highlight .quote .keyword {
     color: #e01931;
 }
 .pcp-highlight .comment,

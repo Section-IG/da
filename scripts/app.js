@@ -243,10 +243,6 @@ buttonExtendedFormatting.addEventListener("click", function(event) {
 
 function drawDiagram() {
     output.innerHTML = parser.getFormattedDiagram(input.value, useExtendedFormatting);
-    var quotes = output.getElementsByClassName("quote");
-    for (var i = 0; i < quotes.length; i++) {
-        quotes[i].innerHTML = quotes[i].textContent;
-    }
 }
 
 function insert(input, string) {

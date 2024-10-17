@@ -285,6 +285,10 @@ input, textarea {
     line-height: 11pt;
 }
 
+#input {
+    outline: none;
+}
+
 @media (min-width: 80rem) {
     .editor-container::after {
         display: block;

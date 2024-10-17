@@ -3,42 +3,41 @@
 // -----------------------------------------------------------------------------
 
 // Welcome Overlay
-var welcomePanel = document.getElementById("welcomePanel");
-var buttonOpen = document.getElementById("buttonOpen");
-var buttonOpenWithExample = document.getElementById("buttonOpenWithExample");
+const welcomePanel = document.getElementById("welcomePanel");
+const buttonOpen = document.getElementById("buttonOpen");
+const buttonOpenWithExample = document.getElementById("buttonOpenWithExample");
 
 // Editor
-var editorInput = document.getElementById("editorInput");
-var input = document.getElementById("input");
-var output = document.getElementById("output");
+const editorInput = document.getElementById("editorInput");
+const input = document.getElementById("input");
+const output = document.getElementById("output");
 
 // General Buttons
-var buttonNew = document.getElementById("buttonNew");
-var buttonPrint = document.getElementById("buttonPrint");
-var inputFileNameToSaveAs = document.getElementById("inputFileNameToSaveAs");
-var buttonSaveAsFile = document.getElementById("buttonSaveAsFile");
-var buttonSaveInCache = document.getElementById("buttonSaveInCache");
+const buttonNew = document.getElementById("buttonNew");
+const buttonPrint = document.getElementById("buttonPrint");
+const inputFileNameToSaveAs = document.getElementById("inputFileNameToSaveAs");
+const buttonSaveAsFile = document.getElementById("buttonSaveAsFile");
+const buttonSaveInCache = document.getElementById("buttonSaveInCache");
 
 // Input Buttons
-var buttonInsertMain = document.getElementById("buttonInsert__Main");
-var buttonInsertCondition = document.getElementById("buttonInsert__Condition");
-var buttonInsertSwitch = document.getElementById("buttonInsert__Switch");
-var buttonInsertLoop = document.getElementById("buttonInsert__Loop");
-var buttonInsertParagraph = document.getElementById("buttonInsert__Paragraph");
-var buttonInsertModule = document.getElementById("buttonInsert__Module");
-var buttonExtendedFormatting = document.getElementById("buttonExtendedFormatting");
-var buttonDarkTheme = document.getElementById("buttonDarkTheme");// Output Tool Buttons
+const buttonInsertMain = document.getElementById("buttonInsert__Main");
+const buttonInsertCondition = document.getElementById("buttonInsert__Condition");
+const buttonInsertSwitch = document.getElementById("buttonInsert__Switch");
+const buttonInsertLoop = document.getElementById("buttonInsert__Loop");
+const buttonInsertParagraph = document.getElementById("buttonInsert__Paragraph");
+const buttonInsertModule = document.getElementById("buttonInsert__Module");
+const buttonDarkTheme = document.getElementById("buttonDarkTheme");// Output Tool Buttons
 
 // Output Buttons
-var buttonReload = document.getElementById("buttonReload");
-var buttonLiveReload = document.getElementById("buttonLiveReload");
-var buttonExtendedFormatting = document.getElementById("buttonExtendedFormatting");
+const buttonReload = document.getElementById("buttonReload");
+const buttonLiveReload = document.getElementById("buttonLiveReload");
+const buttonExtendedFormatting = document.getElementById("buttonExtendedFormatting");
 
 // -----------------------------------------------------------------------------
 // Global Variables
 // -----------------------------------------------------------------------------
 
-var parser = new PseudoCodeParser({
+const parser = new PseudoCodeParser({
     delimiters: [
         { pattern: /\bperform\b/i, replacement: "╔══ perform", border: "║" },
         { pattern: /\bendperform\b/i, replacement: "╙──", border: false },
@@ -48,10 +47,10 @@ var parser = new PseudoCodeParser({
         { pattern: /\b__print-pb__\b/ig, replacement: '<span class="print-pb"></span>' }
     ]
 });
-var useExtendedFormatting = true;
-var liveReload = true;
-var inputValue = input.value;
-var darkTheme = true;
+let useExtendedFormatting = true;
+let liveReload = true;
+let inputValue = input.value;
+let darkTheme = true;
 
 // -----------------------------------------------------------------------------
 // Definition of Listeners
@@ -115,15 +114,84 @@ input.addEventListener("keyup", function() {
 });
 
 input.addEventListener("keydown", function (event) {
-    // Tabulation
-    if (event.keyCode === 9) {
+    if (event.shiftKey && event.key ==="Tab") {
         event.preventDefault();
-        var cursor = input.selectionStart;
-        insert(input, "  ");
-        input.selectionStart = cursor + 2;
-        input.selectionEnd = input.selectionStart;
+
+        manageTabulation(-2);
+        return;
+    }
+
+    // Tabulation
+    if (event.key === "Tab") {
+        event.preventDefault();
+
+        manageTabulation(2);
+    }
+
+    // Parenthesis
+    if (event.key === '(' || event.key === '[' || event.key === '{' || event.key === '"' || event.key === "'") {
+        const start = this.selectionStart;
+        const end = this.selectionEnd;
+
+        if (start === end) {
+            return;
+        }
+        event.preventDefault();
+
+        const selectedText = this.value.substring(start, end);
+
+        const open = event.key;
+        const close = (event.key === '(') ? ')' : (event.key === '[') ? ']' : (event.key === '{') ? '}' : event.key;
+
+        // Set textarea value to: text before selection + open + selected text + close + text after selection
+        this.value = this.value.substring(0, start) + open + selectedText + close + this.value.substring(end);
+
+        // Put caret at right position again
+        this.selectionStart = start + 1;
+        this.selectionEnd = end + 1;
     }
 });
+
+function manageTabulation(spaceNumber) {
+    const start = input.selectionStart;
+    const end = input.selectionEnd;
+
+    // Expand selection to the start and end of the lines
+    const startLine = input.value.lastIndexOf("\n", start - 1) + 1;
+    const endLine = input.value.indexOf("\n", end);
+    const adjustedEnd = endLine === -1 ? input.value.length : endLine;
+
+    const selectedText = input.value.substring(startLine, adjustedEnd);
+    const lines = selectedText.split("\n");
+
+    for (let i = 0; i < lines.length; i++) {
+        if (spaceNumber > 0) {
+            lines[i] = " ".repeat(spaceNumber) + lines[i];
+        } else {
+            const regex = new RegExp(`^ {0,${-spaceNumber}}`);
+            lines[i] = lines[i].replace(regex, "");
+        }
+    }
+
+    const newText = lines.join("\n");
+
+    input.value = input.value.substring(0, startLine) + newText + input.value.substring(adjustedEnd);
+
+    input.selectionStart = start;
+    input.selectionEnd = start + newText.length;
+}
+
+input.addEventListener("scroll", function () {
+    const ratio = input.scrollTop / (input.scrollHeight - input.clientHeight);
+    output.scrollTop = ratio * (output.scrollHeight - output.clientHeight);
+    output.scrollLeft = input.scrollLeft;
+});
+
+// output.addEventListener("scroll", function () {
+//     const ratio = output.scrollTop / (output.scrollHeight - output.clientHeight);
+//     input.scrollTop = ratio * (input.scrollHeight - input.clientHeight);
+//     input.scrollLeft = output.scrollLeft;
+// });
 
 // General Buttons
 buttonNew.addEventListener("click", function(event){
@@ -146,7 +214,7 @@ buttonPrint.addEventListener("click", function(event) {
 buttonSaveAsFile.addEventListener("click", function(event){
     event.preventDefault();
 
-    var fileName = inputFileNameToSaveAs.value;
+    const fileName = inputFileNameToSaveAs.value;
 
     if (fileName) {
         saveTextAsFile(fileName);
@@ -171,7 +239,7 @@ buttonInsertCondition.addEventListener("click", function(event) {
 
 buttonInsertSwitch.addEventListener("click", function(event) {
     event.preventDefault();
-    insert(input, "if ()\n\nelseif ()\n\nelseif ()\n\nelse\n\nendif");
+    insert(input, "switch ()\n\ncase ()\n\ndefault\n\nendswitch");
     drawDiagram();
 });
 
@@ -246,20 +314,20 @@ function drawDiagram() {
 }
 
 function insert(input, string) {
-    var position = input.selectionStart;
-    var before = input.value.substring(0, position);
-    var after = input.value.substring(position, input.value.length);
+    const position = input.selectionStart;
+    const before = input.value.substring(0, position);
+    const after = input.value.substring(position, input.value.length);
 
     input.value = before + string + after;
     input.selectionStart = position + string.length;
     input.selectionEnd = input.selectionStart;
     input.focus();
-};
+}
 
 function saveTextAsFile(fileName) {
-    var source = input.value.replace(/\n/g, "\r\n");
-    var fileUrl = window.URL.createObjectURL(new Blob([source], {type:"text/plain"}));
-    var downloadLink = createDownloadLink(fileUrl, fileName);
+    const source = input.value.replace(/\n/g, "\r\n");
+    const fileUrl = window.URL.createObjectURL(new Blob([source], {type:"text/plain"}));
+    const downloadLink = createDownloadLink(fileUrl, fileName);
 
     document.body.appendChild(downloadLink);
     downloadLink.click();
@@ -267,7 +335,7 @@ function saveTextAsFile(fileName) {
 }
 
 function createDownloadLink(href, name) {
-    var downloadLink = document.createElement("a");
+    const downloadLink = document.createElement("a");
     downloadLink.download = name;
     downloadLink.innerHTML = "Download File";
     downloadLink.href = href;
@@ -281,10 +349,18 @@ function saveContentToCache(){
 }
 
 function putCacheContentToInput(){
-	var codeDA = localStorage['codeDA'] || '';
-	document.getElementById("input").value = codeDA;
+    document.getElementById("input").value = localStorage['codeDA'] || '';
 }
 
 function isSaveKeyboardShortcut(event) {
-    return (window.navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey) && event.keyCode == 83;
+    const userAgent = window.navigator.userAgent;
+
+    let os = "unknown";
+
+    if (userAgent.indexOf("Win") !== -1) os = "Windows";
+    if (userAgent.indexOf("Mac") !== -1) os = "Mac";
+    if (userAgent.indexOf("Linux") !== -1) os = "Linux";
+    if (userAgent.indexOf("X11") !== -1) os = "Android";
+
+    return (os === "Mac" ? event.metaKey : event.ctrlKey) && event.keyCode === 83;
 }

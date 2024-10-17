@@ -289,6 +289,20 @@ input, textarea {
     outline: none;
 }
 
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.horizontal-scroll {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
 @media (min-width: 80rem) {
     .editor-container::after {
         display: block;

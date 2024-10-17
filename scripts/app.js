@@ -33,6 +33,11 @@ const buttonReload = document.getElementById("buttonReload");
 const buttonLiveReload = document.getElementById("buttonLiveReload");
 const buttonExtendedFormatting = document.getElementById("buttonExtendedFormatting");
 
+// Zoom Buttons
+const buttonZoomPlus = document.getElementById("buttonZoomPlus");
+const buttonZoomMinus = document.getElementById("buttonZoomMinus");
+const buttonZoomReset = document.getElementById("buttonZoomReset");
+
 // -----------------------------------------------------------------------------
 // Global Variables
 // -----------------------------------------------------------------------------
@@ -88,7 +93,54 @@ document.addEventListener("keydown", function(event) {
 
         saveContentToCache();
     }
+
+    if (event.ctrlKey && event.code === "Slash") {
+        event.preventDefault();
+        zoom(5);
+    }else if (event.ctrlKey && event.code === "Equal") {
+        event.preventDefault();
+        zoom(-5);
+    }else if (event.ctrlKey && event.code === "Digit0") {
+        event.preventDefault();
+        resetZoom();
+    }
 });
+
+// Zoom text
+buttonZoomPlus.addEventListener("click", function(event) {
+    event.preventDefault();
+    zoom(5);
+});
+
+buttonZoomMinus.addEventListener("click", function(event) {
+    event.preventDefault();
+    zoom(-5);
+});
+
+buttonZoomReset.addEventListener("click", function(event) {
+    event.preventDefault();
+    resetZoom();
+});
+
+function zoom(zoomValue) {
+    const currentFontSize = parseInt(window.getComputedStyle(input).fontSize);
+
+    if (currentFontSize + zoomValue < 10 || currentFontSize + zoomValue > 40) {
+        return;
+    }
+
+    input.style.fontSize = `${currentFontSize + zoomValue}px`;
+    output.style.fontSize = `${currentFontSize + zoomValue}px`;
+    input.style.lineHeight = "normal";
+    output.style.lineHeight = "normal";
+}
+
+function resetZoom() {
+    input.style.fontSize = "";
+    output.style.fontSize = "";
+    input.style.lineHeight = "";
+    output.style.lineHeight = "";
+}
 
 // Welcome Overlay
 buttonOpen.addEventListener("click", function(event) {
@@ -349,7 +401,7 @@ function saveContentToCache(){
 }
 
 function putCacheContentToInput(){
-    document.getElementById("input").value = localStorage['codeDA'] || '';
+    input.value = localStorage['codeDA'] || '';
 }
 
 function isSaveKeyboardShortcut(event) {

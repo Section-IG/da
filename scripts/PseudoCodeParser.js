@@ -13,10 +13,10 @@ const PseudoCodeParser = function(ownValues) {
         { pattern: /\benddo\b/i,        replacement: "╙──",         border: false },
         { pattern: /\bendwhile\b/i,     replacement: "╙──",         border: false },
         { pattern: /===+/i,             replacement: "╙──",         border: false },
-        { pattern: /\bswitch\b/i,       replacement: "┌── switch",  border: "│" },
+        { pattern: /\bmatch\b/i,        replacement: "┌── match",  border: "│" },
         { pattern: /\bcase\b/i,         replacement: "├── case",    border: true },
         { pattern: /\bdefault\b/i,      replacement: "├── default", border: true },
-        { pattern: /\bendswitch\b/i,    replacement: "└──",         border: false },
+        { pattern: /\bendmatch\b/i,     replacement: "└──",         border: false },
     ];
 
     this.symbols = [
@@ -36,7 +36,7 @@ const PseudoCodeParser = function(ownValues) {
         { pattern: /'([^'\n]*)'/ig,         replacement: '<span class="quote">\'$1\'</span>' },
         { pattern: /\/\/ (.*)/ig,           replacement: '<span class="comment">// $1</span>' },
         { pattern: /\/\*([^*/]*)\*\//ig,    replacement: '<span class="comment">/*$1*/</span>' },
-        { pattern: /\b(if|else|do|while|until|times|and|or|is|not|than|est|non|switch|case|default)\b/ig,   replacement: '<span class="reserved-word">$1</span>' },
+        { pattern: /\b(if|else|do|while|until|times|and|or|is|not|than|est|non|match|case|default)\b/ig,   replacement: '<span class="reserved-word">$1</span>' },
         { pattern: /\b(true|false|break|stop|vrai|faux|hv|lv|null|nil|equal)\b/ig,  replacement: '<span class="reserved-word">$1</span>' },
         { pattern: /\b(obtenir|sortir|libérer|liberer|traiter|get|print|return|free|process)\b/ig,  replacement: '<span class="keyword">$1</span>' },
         { pattern: /┌─── \* (.*)/ig,        replacement: '┌─── * <span class="diagram-title">$1</span>' },

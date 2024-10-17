@@ -166,7 +166,7 @@ input.addEventListener("keyup", function() {
 });
 
 input.addEventListener("keydown", function (event) {
-    if (event.shiftKey && event.key ==="Tab") {
+    if (event.shiftKey && event.code === "Tab") {
         event.preventDefault();
 
         manageTabulation(-2);
@@ -174,7 +174,7 @@ input.addEventListener("keydown", function (event) {
     }
 
     // Tabulation
-    if (event.key === "Tab") {
+    if (event.code === "Tab") {
         event.preventDefault();
 
         manageTabulation(2);
@@ -239,12 +239,6 @@ input.addEventListener("scroll", function () {
     output.scrollLeft = input.scrollLeft;
 });
 
-// output.addEventListener("scroll", function () {
-//     const ratio = output.scrollTop / (output.scrollHeight - output.clientHeight);
-//     input.scrollTop = ratio * (input.scrollHeight - input.clientHeight);
-//     input.scrollLeft = output.scrollLeft;
-// });
-
 // General Buttons
 buttonNew.addEventListener("click", function(event){
     event.preventDefault();
@@ -291,7 +285,7 @@ buttonInsertCondition.addEventListener("click", function(event) {
 
 buttonInsertSwitch.addEventListener("click", function(event) {
     event.preventDefault();
-    insert(input, "switch ()\n\ncase ()\n\ndefault\n\nendswitch");
+    insert(input, "match ()\n\ncase ()\n\ndefault\n\nendmatch");
     drawDiagram();
 });
 

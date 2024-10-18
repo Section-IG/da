@@ -127,17 +127,20 @@ buttonZoomReset.addEventListener("click", function(event) {
 });
 
 function zoom(zoomValue) {
-    const fontSizeRem = parseFloat(window.getComputedStyle(input).fontSize) / parseFloat(window.getComputedStyle(document.documentElement).fontSize);
-    const lineHeightRem = parseFloat(window.getComputedStyle(input).lineHeight) / parseFloat(window.getComputedStyle(document.documentElement).fontSize);
-    const outputLineHeightRem = parseFloat(window.getComputedStyle(output).lineHeight) / parseFloat(window.getComputedStyle(document.documentElement).fontSize);
+    const documentFontSize = parseFloat(window.getComputedStyle(document.documentElement).fontSize);
+
+    const fontSizeRem = parseFloat(window.getComputedStyle(input).fontSize) / documentFontSize;
+    const lineHeightRem = parseFloat(window.getComputedStyle(input).lineHeight) / documentFontSize;
+    const outputLineHeightRem = parseFloat(window.getComputedStyle(output).lineHeight) / documentFontSize;
 
     const newFontSizeRem = fontSizeRem + zoomValue;
-    const newLineHeightRem = lineHeightRem + zoomValue;
-    const newOutputLineHeightRem = outputLineHeightRem + zoomValue;
 
     if (newFontSizeRem < 0.5 || newFontSizeRem > 2) {
         return;
     }
+
+    const newLineHeightRem = lineHeightRem + zoomValue;
+    const newOutputLineHeightRem = outputLineHeightRem + zoomValue;
 
     input.style.fontSize = `${newFontSizeRem}rem`;
     output.style.fontSize = `${newFontSizeRem}rem`;

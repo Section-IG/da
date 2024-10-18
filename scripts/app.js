@@ -94,13 +94,17 @@ document.addEventListener("keydown", function(event) {
         saveContentToCache();
     }
 
-    if (event.ctrlKey && event.code === "Slash") {
+    if (!event.ctrlKey) {
+        return;
+    }
+
+    if (event.code === "Slash") {
         event.preventDefault();
-        zoom(5);
-    }else if (event.ctrlKey && event.code === "Equal") {
+        zoom(0.1);
+    } else if (event.code === "Equal") {
         event.preventDefault();
-        zoom(-5);
-    }else if (event.ctrlKey && event.code === "Digit0") {
+        zoom(-0.1);
+    } else if (event.code === "Digit0") {
         event.preventDefault();
         resetZoom();
     }
@@ -109,12 +113,12 @@ document.addEventListener("keydown", function(event) {
 // Zoom text
 buttonZoomPlus.addEventListener("click", function(event) {
     event.preventDefault();
-    zoom(5);
+    zoom(0.1);
 });
 
 buttonZoomMinus.addEventListener("click", function(event) {
     event.preventDefault();
-    zoom(-5);
+    zoom(-0.1);
 });
 
 buttonZoomReset.addEventListener("click", function(event) {
@@ -123,16 +127,22 @@ buttonZoomReset.addEventListener("click", function(event) {
 });
 
 function zoom(zoomValue) {
-    const currentFontSize = parseInt(window.getComputedStyle(input).fontSize);
+    const fontSizeRem = parseFloat(window.getComputedStyle(input).fontSize) / parseFloat(window.getComputedStyle(document.documentElement).fontSize);
+    const lineHeightRem = parseFloat(window.getComputedStyle(input).lineHeight) / parseFloat(window.getComputedStyle(document.documentElement).fontSize);
+    const outputLineHeightRem = parseFloat(window.getComputedStyle(output).lineHeight) / parseFloat(window.getComputedStyle(document.documentElement).fontSize);
 
-    if (currentFontSize + zoomValue < 10 || currentFontSize + zoomValue > 40) {
+    const newFontSizeRem = fontSizeRem + zoomValue;
+    const newLineHeightRem = lineHeightRem + zoomValue;
+    const newOutputLineHeightRem = outputLineHeightRem + zoomValue;
+
+    if (newFontSizeRem < 0.5 || newFontSizeRem > 2) {
         return;
     }
 
-    input.style.fontSize = `${currentFontSize + zoomValue}px`;
-    output.style.fontSize = `${currentFontSize + zoomValue}px`;
-    input.style.lineHeight = "normal";
-    output.style.lineHeight = "normal";
+    input.style.fontSize = `${newFontSizeRem}rem`;
+    output.style.fontSize = `${newFontSizeRem}rem`;
+    input.style.lineHeight = `${newLineHeightRem}rem`;
+    output.style.lineHeight = `${newOutputLineHeightRem}rem`;
 }
 
 function resetZoom() {
@@ -178,10 +188,19 @@ input.addEventListener("keydown", function (event) {
         event.preventDefault();
 
         manageTabulation(2);
+        return;
     }
 
+    const closingBlocks = {
+        "(": ")",
+        "[": "]",
+        "{": "}",
+        "\"": "\"",
+        "'": "'"
+    };
+
     // Parenthesis
-    if (event.key === '(' || event.key === '[' || event.key === '{' || event.key === '"' || event.key === "'") {
+    if (event.key in closingBlocks) {
         const start = this.selectionStart;
         const end = this.selectionEnd;
 
@@ -193,9 +212,8 @@ input.addEventListener("keydown", function (event) {
         const selectedText = this.value.substring(start, end);
 
         const open = event.key;
-        const close = (event.key === '(') ? ')' : (event.key === '[') ? ']' : (event.key === '{') ? '}' : event.key;
+        const close = closingBlocks[event.key];
 
-        // Set textarea value to: text before selection + open + selected text + close + text after selection
         this.value = this.value.substring(0, start) + open + selectedText + close + this.value.substring(end);
 
         // Put caret at right position again
@@ -401,12 +419,14 @@ function putCacheContentToInput(){
 function isSaveKeyboardShortcut(event) {
     const userAgent = window.navigator.userAgent;
 
-    let os = "unknown";
+    const osMapping = {
+        "Linux": "Linux",
+        "Mac": "Mac",
+        "Win": "Windows",
+        "X11": "Android"
+    };
 
-    if (userAgent.indexOf("Win") !== -1) os = "Windows";
-    if (userAgent.indexOf("Mac") !== -1) os = "Mac";
-    if (userAgent.indexOf("Linux") !== -1) os = "Linux";
-    if (userAgent.indexOf("X11") !== -1) os = "Android";
+    const os = Object.keys(osMapping).find(key => userAgent.includes(key)) || "unknown";
 
     return (os === "Mac" ? event.metaKey : event.ctrlKey) && event.keyCode === 83;
 }

@@ -285,7 +285,8 @@ input, textarea {
     line-height: 11pt;
 }
 
-#input {
+.source-input {
+    resize: none;
     outline: none;
 }
 

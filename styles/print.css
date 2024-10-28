@@ -1,5 +1,5 @@
 .print-pb {
-    height: 0px !important;
+    height: 0 !important;
     page-break-before: always;
 }
 

@@ -27,7 +27,7 @@ self.addEventListener('install', function(event) {
     event.waitUntil(addAllToCache());
 });
 
-self.addEventListener('activate', function(event) {
+self.addEventListener('activate', function(_) {
     console.debug('Service worker is activated!');
 });
 
@@ -40,8 +40,7 @@ self.addEventListener('fetch', function(event) {
 async function cacheNetworkRace(event) {
     try {
         const cache = await caches.open(CACHE_NAME);
-        const response = await Promise.any([cacheFetch(cache, event.request), networkFetch(cache, event.request)]);
-        return response;
+        return await Promise.any([cacheFetch(cache, event.request), networkFetch(cache, event.request)]);
     } catch (error) {
         console.error("Not found in cache or network", error);
     }

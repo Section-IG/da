@@ -1,42 +1,47 @@
-var PseudoCodeParser = function(ownValues) {
+const PseudoCodeParser = function(ownValues) {
     this.borders = "";
 
     this.delimiters = [
-        { pattern: /---\*/i,        replacement: "┌─── *",      border: "│" },
-        { pattern: /---[-]+/i,      replacement: "└──────────", border: false },
-        { pattern: /\bif\b/i,       replacement: "┌── if",      border: "│" },
-        { pattern: /\belseif\b/i,   replacement: "├── if",      border: true },
-        { pattern: /\belse\b/i,     replacement: "├── else",    border: true },
-        { pattern: /\bendif\b/i,    replacement: "└──",         border: false },
-        { pattern: /\b___\b/i,      replacement: "└──",         border: false },
-        { pattern: /\bdo\b/i,       replacement: "╔══ do",      border: "║" },
-        { pattern: /\bwhile\b/i,    replacement: "╔══ while",   border: "║" },
-        { pattern: /\benddo\b/i,    replacement: "╙──",         border: false },
-        { pattern: /\bendwhile\b/i, replacement: "╙──",         border: false },
-        { pattern: /===/i,          replacement: "╙──",         border: false }
+        { pattern: /---\*/i,            replacement: "┌─── *",      border: "│" },
+        { pattern: /---+/i,             replacement: "└──────────", border: false },
+        { pattern: /\bif\b/i,           replacement: "┌── if",      border: "│" },
+        { pattern: /\belseif\b/i,       replacement: "├── if",      border: true },
+        { pattern: /\belse\b/i,         replacement: "├── else",    border: true },
+        { pattern: /\bendif\b/i,        replacement: "└──",         border: false },
+        { pattern: /\b___\b/i,          replacement: "└──",         border: false },
+        { pattern: /\bdo\b/i,           replacement: "╔══ do",      border: "║" },
+        { pattern: /\bwhile\b/i,        replacement: "╔══ while",   border: "║" },
+        { pattern: /\benddo\b/i,        replacement: "╙──",         border: false },
+        { pattern: /\bendwhile\b/i,     replacement: "╙──",         border: false },
+        { pattern: /===+/i,             replacement: "╙──",         border: false },
+        { pattern: /\bmatch\b/i,        replacement: "┌── match",   border: "│" },
+        { pattern: /\bcase\b/i,         replacement: "├── case",    border: true },
+        { pattern: /\bdefault\b/i,      replacement: "├── default", border: true },
+        { pattern: /\bendmatch\b/i,     replacement: "└──",         border: false },
     ];
 
     this.symbols = [
-        { pattern: /<=/g, replacement: "≤" },
-        { pattern: />=/g, replacement: "≥" },
-        { pattern: /!=/g, replacement: "≠" },
-        { pattern: /<->/g, replacement: "←→" },
-        { pattern: /->/g, replacement: "→" },
-        { pattern: /=>/g, replacement: "⇒" },
-        { pattern: /sqrt\^/g, replacement: "√" },
-        { pattern: /&&/g, replacement: "AND" }
+        { pattern: /<=/g,       replacement: "≤" },
+        { pattern: />=/g,       replacement: "≥" },
+        { pattern: /!=/g,       replacement: "≠" },
+        { pattern: /<->/g,      replacement: "←→" },
+        { pattern: /->/g,       replacement: "→" },
+        { pattern: /=>/g,       replacement: "⇒" },
+        { pattern: /sqrt\^/g,   replacement: "√" },
+        { pattern: /&&/g,       replacement: "AND" },
+        { pattern: /\|\|/g,     replacement: "OR" },
     ];
 
     this.extendedExpressions = [
-        { pattern: /"([^"\n]*)"/ig, replacement: '<span class="quote">"$1"</span>' },
-        { pattern: /'([^'\n]*)'/ig, replacement: '<span class="quote">\'$1\'</span>' },
-        { pattern: /\/\/ (.*)/ig, replacement: '<span class="comment">// $1</span>' },
-        { pattern: /\/\*([^*/]*)\*\//ig, replacement: '<span class="comment">/*$1*/</span>' },
-        { pattern: /\b(if|else|do|while|until|times|and|or|is|not|than|est|non)\b/ig, replacement: '<span class="reserved-word">$1</span>' },
-        { pattern: /\b(true|false|break|stop|vrai|faux|hv|lv|null|nil|equal)\b/ig, replacement: '<span class="reserved-word">$1</span>' },
-        { pattern: /\b(obtenir|sortir|libérer|liberer|traiter|get|print|return|free|process)\b/ig, replacement: '<span class="keyword">$1</span>' },
-        { pattern: /┌─── \* (.*)/ig, replacement: '┌─── * <span class="diagram-title">$1</span>' },
-        { pattern: /\[([^\]]+)\]ent/ig, replacement: '<span class="whole-part">[</span>$1<span class="whole-part">]ENT</span>' }
+        { pattern: /"([^"\n]*)"/ig,         replacement: '<span class="quote">"$1"</span>' },
+        { pattern: /'([^'\n]*)'/ig,         replacement: '<span class="quote">\'$1\'</span>' },
+        { pattern: /\/\/ (.*)/ig,           replacement: '<span class="comment">// $1</span>' },
+        { pattern: /\/\*([^*/]*)\*\//ig,    replacement: '<span class="comment">/*$1*/</span>' },
+        { pattern: /\b(if|else|do|while|until|times|and|or|is|not|than|est|non|match|case|default)\b/ig,   replacement: '<span class="reserved-word">$1</span>' },
+        { pattern: /\b(true|false|break|stop|vrai|faux|hv|lv|null|nil|equal)\b/ig,  replacement: '<span class="reserved-word">$1</span>' },
+        { pattern: /\b(obtenir|sortir|libérer|liberer|traiter|get|print|return|free|process)\b/ig,  replacement: '<span class="keyword">$1</span>' },
+        { pattern: /┌─── \* (.*)/ig,        replacement: '┌─── * <span class="diagram-title">$1</span>' },
+        { pattern: /\[([^\]]+)]ent/ig,      replacement: '<span class="whole-part">[</span>$1<span class="whole-part">]ENT</span>' },
     ];
 
     if (ownValues) {
@@ -55,14 +60,14 @@ var PseudoCodeParser = function(ownValues) {
 PseudoCodeParser.prototype.getFormattedDiagram = function(string, useExtendedFormatting) {
     this.borders = "";
 
-    var diagram = this.normalize(string);
+    let diagram = this.normalize(string);
     diagram = this.replaceSymbols(diagram);
     diagram = this.escapeHtml(diagram);
     diagram = this.parseModules(diagram);
 
-    var lines = diagram.split("\n");
+    const lines = diagram.split("\n");
     
-    for (var i in lines) {
+    for (const i in lines) {
         lines[i] = this.parseBlock(lines[i].trim());
     }
 
@@ -103,10 +108,11 @@ PseudoCodeParser.prototype.replaceExtendedExpressions = function(string) {
 };
 
 PseudoCodeParser.prototype.escapeHtml = function(string) {
-    var entityMap = {
+    const entityMap = {
         "&": "&amp;",
         "<": "&lt;",
-        ">": "&gt;"
+        ">": "&gt;",
+        "|": "&#124;",
     };
 
     return string.replace(/[&<>]/g, function(symbol) {
@@ -136,10 +142,10 @@ PseudoCodeParser.prototype.parseModules = function(string) {
 };
 
 PseudoCodeParser.prototype.parseBlock = function(string) {
-    var matchesFirstWord = string.match(/^[a-z-_\*=]+/i);
-    var firstWord = (matchesFirstWord) ? matchesFirstWord[0] : "";
+    const matchesFirstWord = string.match(/^[a-z-_*=]+/i);
+    const firstWord = (matchesFirstWord) ? matchesFirstWord[0] : "";
 
-    var delimiter = this.getDelimiterObject(firstWord);
+    const delimiter = this.getDelimiterObject(firstWord);
 
     if (!delimiter) {
         return this.addBorders(string, "", true);
@@ -148,17 +154,17 @@ PseudoCodeParser.prototype.parseBlock = function(string) {
     string = string.replace(delimiter.pattern, delimiter.replacement);
     string = this.addBorders(string, delimiter.border, false);
 
-    return string;        
+    return string;
 };
 
 PseudoCodeParser.prototype.createModule = function(title, inputs, outputs, corners) {
-    var border = "";
+    let border = "";
 
-    for (var i = 0; i < title.length; i++) {
+    for (let i = 0; i < title.length; i++) {
         border += "─";
     }
 
-    var moduleBlock = corners.topLeft + "─" + border + "─" + corners.topRight + inputs + "\n";
+    let moduleBlock = corners.topLeft + "─" + border + "─" + corners.topRight + inputs + "\n";
     moduleBlock += "│ " + title  + " │\n";
     moduleBlock += corners.bottomLeft + "─" + border + "─" + corners.bottomRight + outputs;
 
@@ -166,7 +172,7 @@ PseudoCodeParser.prototype.createModule = function(title, inputs, outputs, corne
 };
 
 PseudoCodeParser.prototype.addBorders = function(string, border, whitespace) {
-    var borders = this.borders;
+    let borders = this.borders;
 
     if (typeof border === "string" && border.length > 0) {
         this.borders += border;
@@ -182,7 +188,7 @@ PseudoCodeParser.prototype.addBorders = function(string, border, whitespace) {
 };
 
 PseudoCodeParser.prototype.getDelimiterObject = function(string) {
-    var i = 0;
+    let i = 0;
 
     while (i < this.delimiters.length && !string.match(this.delimiters[i].pattern)) {
         i++;

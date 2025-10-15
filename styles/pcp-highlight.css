@@ -27,7 +27,8 @@
 }
 
 .sub {
-  font-variant-position: sub;
+    font-size: 0.8em;
+    vertical-align: sub;
 }
 
 .pcp-highlight .print-pb {

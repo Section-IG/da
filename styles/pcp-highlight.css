@@ -26,9 +26,8 @@
     color: #973939;
 }
 
-.indice {
+.sub {
   font-variant-position: sub;
-  /* font-feature-settings: "subs" 2rem; */
 }
 
 .pcp-highlight .print-pb {

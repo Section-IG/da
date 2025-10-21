@@ -25,6 +25,12 @@
 .pcp-highlight .whole-part {
     color: #973939;
 }
+
+.sub {
+    font-size: 0.8em;
+    vertical-align: sub;
+}
+
 .pcp-highlight .print-pb {
     display: block;
     width: 100%;

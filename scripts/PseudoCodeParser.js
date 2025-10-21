@@ -41,7 +41,7 @@ const PseudoCodeParser = function(ownValues) {
         { pattern: /\b(true|false|break|stop|vrai|faux|hv|lv|null|nil|equal)\b/ig,  replacement: '<span class="reserved-word">$1</span>' },
         { pattern: /\b(obtenir|sortir|libérer|liberer|traiter|get|print|return|free|process)\b/ig,  replacement: '<span class="keyword">$1</span>' },
         { pattern: /┌─── \* (.*)/ig,        replacement: '┌─── * <span class="diagram-title">$1</span>' },
-        { pattern: /\[([^\]]+)]ent/ig,      replacement: '<span class="whole-part">[</span>$1<span class="whole-part">]ENT</span>' },
+        { pattern: /\[([^\]]+)\]ent/ig, replacement: '<span class="whole-part">[</span>$1<span class="whole-part">]</span><span class="whole-part sub">ENT</span>' },
     ];
 
     if (ownValues) {

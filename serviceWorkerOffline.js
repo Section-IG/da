@@ -7,11 +7,10 @@ const urlsToCache = [
     '/da/styles/pcp-highlight.css',
     '/da/styles/print.css',
     '/da/styles/reset.css',
-    '/da/styles/toastr.min.css',
+    '/da/styles/toastr-replacement.css',
     '/da/scripts/app.js',
     '/da/scripts/PseudoCodeParser.js',
-    '/da/scripts/libraries/jquery-3.2.1.min.js',
-    '/da/scripts/libraries/toastr.min.js',
+    '/da/scripts/toastr-replacement.js'
 ];
 
 async function addAllToCache() {

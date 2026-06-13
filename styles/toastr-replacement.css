@@ -1,0 +1,89 @@
+/* Toastr Replacement Styles */
+
+#toastr-container {
+    position: fixed;
+    z-index: 9999;
+    pointer-events: none;
+    padding: 1rem;
+}
+
+#toastr-container.toastr-top-right {
+    top: 0;
+    right: 0;
+}
+
+#toastr-container.toastr-top-left {
+    top: 0;
+    left: 0;
+}
+
+#toastr-container.toastr-bottom-right {
+    bottom: 0;
+    right: 0;
+}
+
+#toastr-container.toastr-bottom-left {
+    bottom: 0;
+    left: 0;
+}
+
+.toastr {
+    pointer-events: all;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    max-width: 400px;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.toastr.toastr-show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toastr.toastr-removing {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease-in-out;
+}
+
+.toastr-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.toastr-message {
+    font-weight: 400;
+}
+
+.toastr.toastr-success {
+    background-color: #459D48;
+    color: white;
+    border-left: 4px solid #388E3C;
+}
+
+.toastr.toastr-error {
+    background-color: #f44336;
+    color: white;
+    border-left: 4px solid #c62828;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    .toastr {
+        max-width: 90vw;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    #toastr-container {
+        padding: 0.5rem;
+    }
+}

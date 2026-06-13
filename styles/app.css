@@ -234,8 +234,8 @@ input, textarea {
 
 .editor .editor-header .header-option-items .option-item.option-item--active,
 .editor.editor--dark .editor-header .header-option-items .option-item.option-item--active {
-    background-color: #4CAF50;
-    border-color: #4CAF50;
+    background-color: #459D48;
+    border-color: #459D48;
     color: #fff;
 }
 
@@ -243,7 +243,8 @@ input, textarea {
 .editor.editor--dark .editor-header .header-option-items .option-item.option-item--active:active,
 .editor .editor-header .header-option-items .option-item.option-item--active:hover,
 .editor.editor--dark .editor-header .header-option-items .option-item.option-item--active:hover {
-    background-color: #81C784;
+    background-color: #2d662f;
+    border-color: #2d662f;
     color: #fff;
 }
 
